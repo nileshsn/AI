@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generative AI Search</title>
+</head>
+<body>
+  <h1>Generative AI Search</h1>
+  <input type="text" id="query" placeholder="Enter your query">
+  <button onclick="generateContent()">Search</button>
+  <p id="response"></p>
+
+  <script>
+    async function generateContent() {
+      const query = document.getElementById('query').value;
+      const responseElement = document.getElementById('response');
+
+      try {
+        const response = await fetch('/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ query })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          responseElement.textContent = data.text;
+        } else {
+          responseElement.textContent = 'Error generating content';
+        }
+      } catch (error) {
+        console.error('Error generating content:', error);
+        responseElement.textContent = 'Error generating content';
+      }
+    }
+  </script>
+</body>
+</html>
