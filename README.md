@@ -1,1 +1,3 @@
 # AI
+
+install node modules
